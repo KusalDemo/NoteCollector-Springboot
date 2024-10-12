@@ -4,6 +4,7 @@ package lk.ijse.NoteCollector_Springboot.Service_BO;
 
 import lk.ijse.NoteCollector_Springboot.dto.UserStatus;
 import lk.ijse.NoteCollector_Springboot.dto.impl.UserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface UserService {
     void deleteUser(String userId);
     UserStatus getSelectedUser(String userId);
     List<UserDto> getAllUsers();
+
+    UserDetailsService userDetailsService();
 }

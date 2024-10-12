@@ -11,6 +11,7 @@ import lk.ijse.NoteCollector_Springboot.exception.DataPersistException;
 import lk.ijse.NoteCollector_Springboot.exception.UserNotFoundException;
 import lk.ijse.NoteCollector_Springboot.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +75,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUsers() {
         return mapper.toUserDtoList(userDao.findAll());
+    }
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return username -> userDao.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("User With : "+username+" Not Found"));
     }
 }
