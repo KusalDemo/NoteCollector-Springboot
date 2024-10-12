@@ -1,5 +1,6 @@
 package lk.ijse.NoteCollector_Springboot.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @Value("${secure.username}")
+    private String username;
+
+    @Value("${secure.password}")
+    private String password;
+
+    @Value("${secure.role}")
+    private String role;
 
     @Bean
     SecurityFilterChain configureSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -28,9 +37,9 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         //Principal User
         UserDetails inMemoryUser = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("admin")
-                .roles("USER")
+                .username(username)
+                .password(password)
+                .roles(role)
                 .build();
         return new InMemoryUserDetailsManager(inMemoryUser);
     }
